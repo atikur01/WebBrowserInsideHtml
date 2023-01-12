@@ -1,0 +1,87 @@
+﻿@model WebApplication1.Models.WebBrowser;
+
+@{
+    ViewData["Title"] = "Create";
+    String x="";
+    if (CountHelp.History.Count != 0)
+    {
+        var l = CountHelp.History;
+
+        if (CountHelp.index >= 0 && CountHelp.index < CountHelp.History.Count)
+        {
+            x = l[CountHelp.index];
+        }
+        
+    }
+
+}
+
+<div class="row">
+    <div  class="col-md-4">
+
+        <form  asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="form-group">
+                <label asp-for="URL" class="control-label"></label>
+                <input value='@x' asp-for="URL" class="form-control" />
+                <span asp-validation-for="URL" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+
+                <input type="submit" value="⟳" class="btn btn-primary" />
+            </div>
+</form>
+       
+
+
+        <form  asp-action="Back">
+
+            <div class="form-group">
+
+                <input type="submit" value="<" class="btn btn-primary" />
+            </div>
+        </form>
+
+        <form asp-action="Forward">
+
+            <div class="form-group">
+
+                <input type="submit" value=">" class="btn btn-primary" />
+            </div>
+        </form>
+
+         
+
+        
+    </div>
+   
+</div>
+
+@{
+
+    if (CountHelp.count == 1)
+    {
+        <iframe src="https://www.google.com/search?igu=1" width="100%" height="540"></iframe>
+        CountHelp.count++;
+
+        CountHelp.History.Add("https://www.google.com/search?igu=1");
+
+        Console.WriteLine(CountHelp.count);
+
+    }
+    else
+    {
+
+        <iframe src="@x" width="100%" height="540"></iframe>
+        Console.WriteLine(x);
+    }
+
+}
+
+
+
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
